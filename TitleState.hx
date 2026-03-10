@@ -574,7 +574,7 @@ class TitleState extends MusicBeatState
 			{
 				case 1:
 					#if PSYCH_WATERMARKS
-					createCoolText(['Psych Engine by'], 15);
+					createCoolText(['Perfect! Engine by'], 15);
 					#else
 					#end
 				// credTextShit.visible = true;
