@@ -2627,6 +2627,11 @@ class PlayState extends MusicBeatState
 				}
 			});
 		}
+		if (ClientPrefs.gameStyle == 'Perfect! Engine') {
+			scoreTxt.text = 'Combo: ' + combo + ' | Score: ' + songScore + ' | Perfect Breaks: ' + songMisses + ' | Accuracy: ' + Highscore.floorDecimal(ratingPercent * 100, 2)
+				+ '%' + ' | ' + ratingName + ' [' + ratingFC + ']';
+			judgementCounter.text = 'Combo: ${combo}\nSicks: ${sicks}\nGoods: ${goods}\nBads: ${bads}\nShits: ${shits}\nPerfect Breaks: ${songMisses}';
+		}
 		checkEventNote();
 
 		if (!inCutscene) {
@@ -3435,7 +3440,7 @@ class PlayState extends MusicBeatState
 			spawnNoteSplashOnNote(note);
 		}
 
-		if(!practiceMode) {
+		if(!cpuControlled) {
 			songScore += score;
 			songHits++;
 			totalPlayed++;
@@ -3472,7 +3477,7 @@ class PlayState extends MusicBeatState
 			pixelShitPart1 = 'pixelUI/';
 			pixelShitPart2 = '-pixel';
 		}
-
+        if(!cpuControlled) {
 		rating.loadGraphic(Paths.image(pixelShitPart1 + daRating + pixelShitPart2));
 		rating.cameras = [camHUD];
 		rating.screenCenter();
@@ -3588,6 +3593,7 @@ class PlayState extends MusicBeatState
 			},
 			startDelay: Conductor.crochet * 0.001
 		});
+	}
 	}
 
 	private function onKeyPress(event:KeyboardEvent):Void
@@ -4430,6 +4436,7 @@ class PlayState extends MusicBeatState
 		setOnLuas('score', songScore);
 		setOnLuas('misses', songMisses);
 		setOnLuas('hits', songHits);
+		setOnLuas('combo', combo);
 
 		var ret:Dynamic = callOnLuas('onRecalculateRating', []);
 		if(ret != FunkinLua.Function_Stop)
